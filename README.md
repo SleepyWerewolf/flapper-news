@@ -1,4 +1,4 @@
-Sample application put partially put together for GITS team meeting/workshop. The purpose of this workshop is for the team to split up into their respective groups (front end, back end, etc.), and work through building out the respective portions of the application.
-
-The workshop will be using Thinkster's MEAN tutorial, found here: https://thinkster.io/mean-stack-tutorial#introduction
-
+Backend team:
+- Your role is to implement a dynamic REST API, so that anyone can interact with our application through HTTP requests.
+- You will be working on the back end branch (back-end), which will have just the raw HTML and Angular code produced from the front end team's Part 1 tutorial.
+- Depending on how far you get, you can also work on integrating Stormpath into the application (the tutorial uses Passport, which is a similar authentication library).
