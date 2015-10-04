@@ -1,0 +1,12 @@
+.entry {
+    font-size:20px; 
+    margin-left:10px;
+}
+
+.form-submission {
+    margin-top: 30px;
+}
+
+.glyphicon-thumbs-up { 
+    cursor:pointer 
+}
