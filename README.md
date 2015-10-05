@@ -2,3 +2,6 @@ Sample application put partially put together for GITS team meeting/workshop. Th
 
 The workshop will be using Thinkster's MEAN tutorial, found here: https://thinkster.io/mean-stack-tutorial#introduction
 
+
+
+THIS IS A TEST AND WE WANT IT TO SHOW UP ON GITHUB
