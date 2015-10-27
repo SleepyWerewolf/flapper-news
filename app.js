@@ -8,7 +8,12 @@ var bodyParser = require('body-parser');
 // database dependencies
 require('./models/Posts');
 require('./models/Comments');
+require('./models/Users');
+require('./config/passport');
 var mongoose = require('mongoose');
+
+// Passport authentication
+var passport = require('passport');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -29,6 +34,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize()); // Passport middleware
 
 app.use('/', routes);
 app.use('/users', users);
