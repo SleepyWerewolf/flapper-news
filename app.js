@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 require('./models/Posts');
 require('./models/Comments');
 require('./models/Users');
+require('./models/Incidents');
 require('./config/passport');
 var mongoose = require('mongoose');
 

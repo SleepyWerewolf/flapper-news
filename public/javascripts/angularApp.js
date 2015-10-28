@@ -10,8 +10,11 @@ app.config([
             templateUrl: '/home.html',
             controller: 'MainCtrl',
             resolve: {
-                postPromise: ['posts', function(posts) {
-                    return posts.getAll();
+                //postPromise: ['posts', function(posts) {
+                //    return posts.getAll();
+                //}]
+                incidentPromise: ['incidents', function(incidents) {
+                    return incidents.getAll();
                 }]
             }
         });
@@ -49,6 +52,17 @@ app.config([
             }]
         });
 
+        $stateProvider.state('incidents', {
+            url:'/incidents/{id}',
+            templateUrl: '/incidents.html',
+            controller: 'IncidentCtrl',
+            resolve: {
+                incident: [ '$stateParams', 'incidents', function($stateParams, incidents) {
+                    return incidents.get($stateParams.id);
+                }]
+            }
+        });
+
         $urlRouterProvider.otherwise('home');
     }
 ]);
@@ -57,10 +71,12 @@ app.config([
 app.controller('MainCtrl', [
     '$scope',
     'posts',
+    'incidents',
     'auth',
-    function($scope, posts, auth) {
+    function($scope, posts, incidents, auth) {
         $scope.test = 'Hello World!';
         $scope.posts = posts.posts;
+        $scope.incidents = incidents.incidents;
         $scope.isLoggedIn = auth.isLoggedIn;
 
         $scope.addPost = function(){
@@ -75,6 +91,16 @@ app.controller('MainCtrl', [
 
         $scope.incrementUpvotes = function(post) {
             posts.upvote(post);
+        };
+
+        $scope.addIncident = function() {
+            if (!$scope.building_type || $scope.building_type === '' || !$scope.address | $scope.address === '') return;
+            incidents.create({
+                building_type: $scope.building_type,
+                address: $scope.address,
+            });
+            $scope.building_type = '';
+            $scope.address = '';
         };
     }
 ]);
@@ -137,6 +163,18 @@ app.controller('NavCtrl', [
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.currentUser = auth.currentUser;
         $scope.logout = auth.logout;
+    }
+]);
+
+app.controller('IncidentCtrl', [
+    '$scope',
+    'incidents',
+    'incident',
+    'auth',
+    function($scope, incidents, incident, auth) {
+        $scope.incident = incident;
+        $scope.incidents = incidents;
+        $scope.isLoggedIn = auth.isLoggedIn;
     }
 ]);
 
@@ -236,5 +274,37 @@ app.factory('auth', [
             $window.localStorage.removeItem('flapper-news-token');
         };
         return auth;
+    }
+]);
+
+app.factory('incidents', [
+    '$http',
+    'auth',
+    function($http, auth) {
+        var o = {
+            incidents: []
+        };
+
+        o.get = function(id) {
+            return $http.get('/incidents/' + id).then(function(res) {
+                return res.data;
+            });
+        };
+
+        o.getAll = function() {
+            return $http.get('/incidents').success(function(data) {
+                angular.copy(data, o.incidents);
+            });
+        };
+
+        o.create = function(post) {
+          return $http.post('/incidents', post, {
+            headers: { Authorization: 'Bearer '+auth.getToken() }
+          }).success(function(data){
+            o.incidents.push(data);
+          });
+        };
+
+        return o;
     }
 ]);

@@ -6,6 +6,7 @@ var jwt = require('express-jwt');
 var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
+var Incident = mongoose.model('Incident');
 
 var auth = jwt({ secret: 'SECRET_KEY', userProperty: 'payload' });
 
@@ -128,6 +129,32 @@ router.post('/login', function(req, res, next) {
 			return res.status(401).json(info);
 		}
 	})(req, res, next);
+});
+
+// Incident routes
+router.get('/incidents', function(req, res, next) {
+	Incident.find(function(err, incidents){
+		if (err) return next(err);
+		res.json(incidents);
+	});
+});
+
+router.get('/incidents/:incident', function(req, res) {
+	Incident.findOne({ '_id': req.params.incident }, function(err, incident) {
+		if (err) return next(err);
+		res.json(incident);
+	});
+});
+
+
+/* POST posts */
+router.post('/incidents', auth, function(req, res, next) {
+	var incident = new Incident(req.body);
+	
+	incident.save(function(err, incident){
+		if (err) { console.log(err); return next(err); }
+		res.json(incident);
+	});
 });
 
 module.exports = router;
