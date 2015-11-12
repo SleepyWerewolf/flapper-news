@@ -7,7 +7,7 @@ app.config([
     function($stateProvider, $urlRouterProvider) {
         $stateProvider.state('home', {
             url: '/home',
-            templateUrl: '/home.html',
+            templateUrl: '/javascripts/components/home/homeView.html',
             controller: 'MainCtrl',
             resolve: {
                 //postPromise: ['posts', function(posts) {
@@ -19,20 +19,9 @@ app.config([
             }
         });
 
-        $stateProvider.state('posts', {
-            url: '/posts/{id}',
-            templateUrl: '/posts.html',
-            controller: 'PostsCtrl',
-            resolve: {
-                post: [ '$stateParams', 'posts', function($stateParams, posts) {
-                    return posts.get($stateParams.id);
-                }]
-            }  
-        });
-
         $stateProvider.state('login', {
             url: '/login',
-            templateUrl: '/login.html',
+            templateUrl: '/javascripts/components/auth/loginView.html',
             controller: 'AuthCtrl',
             onEnter: ['$state', 'auth', function($state, auth) {
                 if (auth.isLoggedIn()) {
@@ -43,7 +32,7 @@ app.config([
 
         $stateProvider.state('register', {
             url: '/register',
-            templateUrl: '/register.html',
+            templateUrl: '/javascripts/components/auth/registerView.html',
             controller: 'AuthCtrl',
             onEnter: ['$state', 'auth', function($state, auth) {
                 if (auth.isLoggedIn()) {
@@ -54,7 +43,7 @@ app.config([
 
         $stateProvider.state('incidents', {
             url:'/incidents/{id}',
-            templateUrl: '/incidents.html',
+            templateUrl: '/javascripts/components/incident/incidentView.html',
             controller: 'IncidentCtrl',
             resolve: {
                 incident: [ '$stateParams', 'incidents', function($stateParams, incidents) {

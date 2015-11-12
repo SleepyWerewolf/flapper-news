@@ -1,0 +1,18 @@
+<div class="page-header">
+  <a href="http://localhost:3000/#/home">Home</a>
+  <h3>
+  </h3>
+</div>
+
+Building Type: {{ incident.building_type }}<br>
+Address: {{ incident.address }}<br>
+Nearest Cross Streets:<br>
+  <ul>
+  <li>Something St.</li>
+  <li>Thingsome St.</li>
+  </ul>
+GPS Coordinates: 32.834246, -116.95028100000002<br>
+Moniker: Dr. Hax0rz n shit
+<div ng-hide="isLoggedIn()">
+  <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can comment.</h3>
+</div>

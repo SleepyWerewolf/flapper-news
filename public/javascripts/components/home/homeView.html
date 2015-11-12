@@ -1,0 +1,46 @@
+<div class="page-header">
+  <h1>Graffiti Incident Tracking System</h1>
+</div>
+
+<div ng-repeat="post in posts | orderBy:'-upvotes'">
+  <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post)"></span>
+  {{ post.upvotes }}
+  <span class="entry">
+    <a ng-show="post.link" href="{{post.link}}">
+      {{ post.title }}
+    </a>
+    <span ng-hide="post.link">
+      {{ post.title }}
+    </span>
+    <span ng-show="post.author">
+    posted by <a>{{ post.author }}</a> |
+    </span>
+  </span>
+
+  <span>
+      <a href="#/posts/{{ post._id }}">Comments</a>
+  </span>
+</div>
+
+<div ng-repeat="incident in incidents | orderBy:'-building_type'">
+  <span class="entry">
+    <a href="#/incidents/{{ incident._id }}">
+      {{ incident.building_type }} - {{ incident.address }}
+    </a>
+  </span>
+</div>
+
+<div ng-hide="isLoggedIn()">
+  <h3>You need to <a href="/#/login">Login</a> or <a href="/#/register">Register</a> before you can add posts.</h3>
+</div>
+
+<form class="form-submission" ng-submit="addIncident()" ng-show="isLoggedIn()">
+  <h3>Add a new incident</h3>
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Building Type" ng-model="building_type"></input>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Address" ng-model="address"></input>
+  </div>
+  <button type="submit" class="btn btn-primary">Post</button>
+</form>
