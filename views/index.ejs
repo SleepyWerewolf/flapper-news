@@ -48,7 +48,7 @@
         </span>
       </div>
 
-      <div ng-repeat="incident in incidents">
+      <div ng-repeat="incident in incidents | orderBy:'-building_type'">
         <span class="entry">
           <a href="#/incidents/{{ incident._id }}">
             {{ incident.building_type }} - {{ incident.address }}
@@ -109,7 +109,7 @@
 
   <script type="text/ng-template" id="/register.html">
     <div class="page-header">
-      <h1>Flapper News</h1>
+      <h1>Graffiti Incident Tracking System</h1>
     </div>
 
     <div ng-show="error" class="alert alert-danger row">
@@ -138,7 +138,7 @@
 
   <script type="text/ng-template" id="/login.html">
     <div class="page-header">
-      <h1>Flapper News</h1>
+      <h1>Graffiti Incident Tracking System</h1>
     </div>
 
     <div ng-show="error" class="alert alert-danger row">
@@ -173,7 +173,13 @@
 
     Building Type: {{ incident.building_type }}<br>
     Address: {{ incident.address }}<br>
-
+    Nearest Cross Streets:<br>
+      <ul>
+      <li>Something St.</li>
+      <li>Thingsome St.</li>
+      </ul>
+    GPS Coordinates: 32.834246, -116.95028100000002<br>
+    Moniker: Dr. Hax0rz
     <div ng-hide="isLoggedIn()">
       <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can comment.</h3>
     </div>
